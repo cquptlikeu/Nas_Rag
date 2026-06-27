@@ -14,9 +14,9 @@
 - **TRUTH(内部真源入口,按权威排序)**:
   1. `docs/PRD.md`(v0.2,产品 charter)+ `docs/ARCHITECTURE.md`(v0.3,实现结构 / 数据契约 / 关键决策 ADR)—— 一期权威基线;实现以二者为准(PRD 定"做什么 / 口径",ARCHITECTURE 定"怎么落地 / 契约";冲突时 PRD 优先,停下对账)。
   2. `config/capability_matrix.yaml`(资格矩阵,分量级,S0 建 / S2 锁)、`eval/frozen/queries.jsonl`(评测集 + GT,**S2 冻结**)、`data/manifest.jsonl`(**S1 产出**)—— 产出后即升为最高数据级真源;**当前尚不存在,以 PRD §6 / §6.1 与 ARCHITECTURE §5 数据契约 / §3 AD-5 为准**。
-  3. `README.md`(待建)—— 项目 spec / 上手说明。
+  3. `README.md`(S0.1 已建)—— 项目 spec / 上手说明。
   4. `D:\Users\likeu\Desktop\多模态RAG与评估_交接记忆.md` —— 背景与决策史(**模式证据,不覆盖当前代码/PRD**)。
-- **代码根目录**:`F:\develop\code\vsCode\agent-learning\NAS_RAG`(是 `agent-learning` git 仓库的**子目录**,非独立仓库)。
+- **代码根目录**:`F:\develop\code\vsCode\agent-learning\NAS_RAG`(**拥有自己 `.git` 与独立远程 `origin=https://github.com/cquptlikeu/Nas_Rag.git` 的嵌套独立仓库**;物理位于 `agent-learning` 目录内,但**既非其 submodule、也非其跟踪子目录**——父 `agent-learning` 亦为独立 git 仓库[远程 gitee `ai-agent-learning`]、无 `.gitmodules`、视本目录为未跟踪。从本目录执行 git 命中的是本仓库)。
 
 ---
 
@@ -216,7 +216,7 @@ applies_when: 本项目从 HF 拉取数据集 / 模型
 
 ## 12. Git 规则
 
-- 提交前确认 git root(**注意本目录是 `agent-learning` 子目录**)、`git status --short`、嵌套仓库边界。
+- 提交前确认 git root(`git rev-parse --show-toplevel` 应为本目录 `NAS_RAG` 自身——它是自有 `.git` 与独立远程的嵌套独立仓库,git 操作命中本仓库)、`git status --short`、嵌套仓库边界(父 `agent-learning` 亦为独立仓库;**勿在父仓库 `git add .` 把本仓库误吸入父仓库**)。
 - **禁止 `git add .`**;只 stage 本任务相关文件。
 - 不在 dirty worktree 回滚 / 吸入用户未授权改动;不用破坏性 git 命令,除非用户明确要求并确认风险。
 - **提交 / 推送仅在用户明确要求时进行**。
