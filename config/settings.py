@@ -32,7 +32,7 @@ CAPABILITY_MATRIX_PATH: Path = CONFIG_DIR / "capability_matrix.yaml"
 # --- 模型(可替换零件,A/B 改此处;ARCHITECTURE §9) ---
 EMBED_MODEL: str = "BAAI/bge-m3"                      # 一期仅 dense
 RERANK_MODEL: str = "BAAI/bge-reranker-v2-m3"         # sentence-transformers CrossEncoder,单后端
-OCR_ENGINE: str | None = None                        # S0.2 由回退链 PaddleOCR→RapidOCR→Tesseract 选定后回填
+OCR_ENGINE: str | None = "rapidocr"                  # S0.2 选定:rapidocr-onnxruntime(numpy-2 兼容、装包最稳;Paddle 因 numpy 降级风险跳过,Tesseract 为后备)
 
 # --- 指标 k 口径(OWNER:指标定义;PRD §7,任何阶段不得另算一套) ---
 K_VALUES: tuple[int, ...] = (1, 3, 5, 10)

@@ -11,7 +11,7 @@ dependencies:
       # --- orchestration ---
       - llama-index-core
       - llama-index-embeddings-huggingface
-      - llama-index-vector-stores-chroma
+      - llama-index-vector-stores-chroma  # AD-2 冗余待定:ChromaStore 走原生 chromadb,可能不需要;S3 写 ChromaStore 时定,本期不强删
       - llama-index-retrievers-bm25
       - llama-index-readers-file
       # --- vector store ---
@@ -27,6 +27,8 @@ dependencies:
       # --- parsing ---
       - pypdf
       - pillow
+      # --- OCR(S0.2 选定:rapidocr;numpy-2 兼容、自带小模型、装包最稳) ---
+      - rapidocr-onnxruntime
       # --- utils ---
       - pandas
       - numpy
@@ -36,7 +38,9 @@ dependencies:
 # NOTE:
 # - Reranker uses sentence-transformers CrossEncoder (bge-reranker-v2-m3) — SAME backend
 #   as the embedder. Do NOT add FlagEmbedding (avoids torch/transformers version clashes).
-# - OCR engine decided in S1 via fallback chain PaddleOCR -> RapidOCR -> Tesseract+chi_sim;
-#   add its dependency at S1 (not S6). Run an import smoke-test as an S0 gate.
+# - OCR engine SELECTED at S0.2 = rapidocr-onnxruntime (config.OCR_ENGINE='rapidocr').
+#   Fallback chain PaddleOCR -> RapidOCR -> Tesseract+chi_sim; PaddleOCR skipped because it
+#   would downgrade numpy 2.x and break the torch stack. Import smoke-test gates it
+#   (tests/test_smoke_imports.py). S1 wires OCR into the ingest pipeline.
 # - At the end of S0, pin ALL versions (pip freeze / conda env export -> lock file in git)
 #   to satisfy reproducibility (PRD NFR-3 / ARCHITECTURE AD-7).
