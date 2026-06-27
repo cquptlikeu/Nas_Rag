@@ -1,0 +1,36 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- 虚拟环境(conda env 在仓库外,不入 git) ---
+.venv/
+venv/
+
+# --- 数据(本地、可重建;仅保留 .gitkeep 占位目录) ---
+data/raw/*
+data/corpus/*
+data/index/*
+!data/raw/.gitkeep
+!data/corpus/.gitkeep
+!data/index/.gitkeep
+
+# --- 模型权重 / 缓存(本地优先,不入 git) ---
+*.bin
+*.safetensors
+*.onnx
+.cache/
+
+# --- 日志 / 临时 ---
+*.log
+
+# --- 评测冻结产物:绝不可忽略(S2 冻结 GT/queries 入 git,AD-7;项目铁律) ---
+# 防御性锚定:即便将来新增 eval/ 草稿忽略规则,也不误伤 frozen。
+!eval/frozen/
+!eval/frozen/**

@@ -1,0 +1,19 @@
+# 资格矩阵(分量级)—— 文件类型 × 可检索分量
+# 权威:ARCHITECTURE AD-5 / PRD §6.1。
+# S2 与 GT 一起由代码生成冻结版;S2 前以本文件 + AD-5 为准(二者须一致,冲突即停下对账)。
+#
+# 一致性判据(资格规则):
+#   类型 T 对查询 q 可作正例 ⟺ required_components(q) ⊆ supported_components(T) 且文件实际匹配。
+#   GT 派生即据此筛正例;归因退化为成员判定(ranked_id ∈ frozen_positives ? TP : FP)。
+#
+# 分量全集:time / type / filename / location / semantic
+
+version: 0
+
+supported_components:
+  photo: [time, type, filename, location]   # 照片:EXIF 时间/地点 + 文件名;本期不做 CLIP 视觉语义
+  video: [time, type, filename]             # 视频:仅文件名/日期;退出地点(Q4)/语义(Q5)正例
+  scan:  [time, type, filename, semantic]   # 证件/凭证(扫描):OCR→文本,可语义
+  study: [time, type, filename, semantic]   # 学习/资料:抽文本,可语义
+  note:  [time, type, filename, semantic]   # 笔记:抽文本,可语义
+  media: []                                 # 媒体:纯噪声,全行 ➖,恒真负例

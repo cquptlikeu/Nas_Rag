@@ -1,10 +1,12 @@
 name: nas_rag
 channels:
+  # 仅 conda-forge:本环境只从 conda 装 python/pip/pyyaml,其余走 pip。
+  # 不用 defaults —— 它会展开到已弃用的 pkgs/free 镜像,正是 S0.1 装包超时/SSL 失败的根因。
   - conda-forge
-  - defaults
 dependencies:
   - python=3.12
   - pip
+  - pyyaml             # 读取 config/capability_matrix.yaml(S0.3 capability 需要)
   - pip:
       # --- orchestration ---
       - llama-index-core

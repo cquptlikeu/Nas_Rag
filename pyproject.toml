@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nas-rag"
+version = "0.0.0"
+description = "个人 NAS 多模态文件检索 —— 检索质量与评估(一期)"
+requires-python = ">=3.12"
+
+# src-layout:包在 src/ 下,可编辑安装(pip install -e .)后 `import nas_rag` 全局可用。
+# config/ 在仓库根、作为顶层包,通过 `python -m pytest`(cwd 入 path)与 pytest pythonpath 共同可导入,
+# 不装进 site-packages(避免顶层名 `config` 的全局污染)。
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["nas_rag*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
