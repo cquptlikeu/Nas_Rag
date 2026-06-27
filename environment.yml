@@ -1,0 +1,40 @@
+name: nas_rag
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      # --- orchestration ---
+      - llama-index-core
+      - llama-index-embeddings-huggingface
+      - llama-index-vector-stores-chroma
+      - llama-index-retrievers-bm25
+      - llama-index-readers-file
+      # --- vector store ---
+      - chromadb
+      # --- models ---
+      - sentence-transformers
+      # --- lexical retrieval ---
+      - rank-bm25
+      - jieba              # 中文 + 文件名分词(Q1-Q3 关键);S1/S3 即需,不可缺
+      # --- data / public datasets ---
+      - datasets
+      - huggingface-hub
+      # --- parsing ---
+      - pypdf
+      - pillow
+      # --- utils ---
+      - pandas
+      - numpy
+      - tqdm
+      # --- tests ---
+      - pytest
+# NOTE:
+# - Reranker uses sentence-transformers CrossEncoder (bge-reranker-v2-m3) — SAME backend
+#   as the embedder. Do NOT add FlagEmbedding (avoids torch/transformers version clashes).
+# - OCR engine decided in S1 via fallback chain PaddleOCR -> RapidOCR -> Tesseract+chi_sim;
+#   add its dependency at S1 (not S6). Run an import smoke-test as an S0 gate.
+# - At the end of S0, pin ALL versions (pip freeze / conda env export -> lock file in git)
+#   to satisfy reproducibility (PRD NFR-3 / ARCHITECTURE AD-7).
