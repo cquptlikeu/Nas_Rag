@@ -49,6 +49,7 @@ MIN_CANDIDATE_POOL: int = 30    # 每被查 type_label 候选下限(候选池门
 # --- 评测集分割阈值(PRD FR-6 / ARCHITECTURE §8) ---
 MIN_PER_CATEGORY: int = 8
 MIN_TEST_PER_CATEGORY: int = 2
+MIN_CELL_SAMPLE: int = 5
 TEST_RATIO: float = 0.2
 
 # --- 分词配置(BM25:jieba 中文 + 文件名分词器;ARCHITECTURE §9) ---
